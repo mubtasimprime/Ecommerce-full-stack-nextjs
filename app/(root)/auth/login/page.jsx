@@ -18,13 +18,9 @@ import { Input } from "@/components/ui/input";
 import ButtonLoading from "@/components/Applications/ButtonLoading";
 import z from "zod";
 import { useState } from "react";
-import { FaRegEye } from "react-icons/fa";
-import { FaRegEyeSlash } from "react-icons/fa";
-import { IoEyeOutline } from "react-icons/io5";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
-  const [isTypePassword, setIsTypePassword] = useState(true);
 
   const formSchema = zSchema.pick({ email: true }).extend({
     password: z.string().min(3, "Password must be at least 6 characters long"),
@@ -79,26 +75,11 @@ const LoginPage = () => {
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem className={`relative`}>
+                <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type={isTypePassword ? "password" : "text"}
-                      placeholder="••••••••"
-                      {...field}
-                    />
+                    <Input type="password" placeholder="••••••••" {...field} />
                   </FormControl>
-                  <button
-                    onClick={() => setIsTypePassword(!isTypePassword)}
-                    className="absolute top-[55%] right-2 cursor-pointer"
-                    type="button"
-                  >
-                    {isTypePassword ? (
-                      <FaRegEyeSlash></FaRegEyeSlash>
-                    ) : (
-                      <IoEyeOutline></IoEyeOutline>
-                    )}
-                  </button>
                   <FormMessage />
                 </FormItem>
               )}

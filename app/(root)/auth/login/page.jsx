@@ -18,6 +18,8 @@ import { Input } from "@/components/ui/input";
 import ButtonLoading from "@/components/Applications/ButtonLoading";
 import z from "zod";
 import { useState } from "react";
+import Link from "next/link";
+import { WEBSITE_FORGOT_PASSWORD, WEBSITE_REGISTER } from "@/routes/WebsiteRoute";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
@@ -45,7 +47,7 @@ const LoginPage = () => {
           <Image src={Logo} alt="Logo" className="max-w-[150px]" />
         </div>
         <div className="text-center">
-          <h1 className="text-3xl font-bold">Login into Account</h1>
+          <h1 className="text-3xl font-bold mb-1">Login into Account</h1>
           <p>Login into your account by filling out the form below</p>
         </div>
 
@@ -92,6 +94,22 @@ const LoginPage = () => {
             >
               Login
             </ButtonLoading>
+            <div className="text-center">
+              <div className="flex justify-center gap-2">
+                <p>Don&apos;t have an account?</p>
+                <Link
+                  href={WEBSITE_REGISTER}
+                  className="text-primary underline"
+                >
+                  Create an Account
+                </Link>
+              </div>
+              <div className="mt-1">
+                <Link href={WEBSITE_FORGOT_PASSWORD} className="text-primary underline">
+                  Forgot Password?
+                </Link>
+              </div>
+            </div>
           </form>
         </Form>
       </CardContent>

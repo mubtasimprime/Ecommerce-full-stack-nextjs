@@ -19,7 +19,10 @@ import ButtonLoading from "@/components/Applications/ButtonLoading";
 import z from "zod";
 import { useState } from "react";
 import Link from "next/link";
-import { WEBSITE_FORGOT_PASSWORD, WEBSITE_REGISTER } from "@/routes/WebsiteRoute";
+import {
+  WEBSITE_FORGOT_PASSWORD,
+  WEBSITE_REGISTER,
+} from "@/routes/WebsiteRoute";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
@@ -36,7 +39,7 @@ const LoginPage = () => {
     },
   });
 
-  const onSubmit = async (values) => {
+  const onLoginSubmit = async (values) => {
     console.log(values);
   };
 
@@ -53,7 +56,7 @@ const LoginPage = () => {
 
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(onLoginSubmit)}
             className="space-y-4 mt-6"
           >
             <FormField
@@ -91,9 +94,7 @@ const LoginPage = () => {
               className="w-full cursor-pointer"
               text="Login"
               loading={loading}
-            >
-              Login
-            </ButtonLoading>
+            ></ButtonLoading>
             <div className="text-center">
               <div className="flex justify-center gap-2">
                 <p>Don&apos;t have an account?</p>
@@ -105,7 +106,10 @@ const LoginPage = () => {
                 </Link>
               </div>
               <div className="mt-1">
-                <Link href={WEBSITE_FORGOT_PASSWORD} className="text-primary underline">
+                <Link
+                  href={WEBSITE_FORGOT_PASSWORD}
+                  className="text-primary underline"
+                >
                   Forgot Password?
                 </Link>
               </div>

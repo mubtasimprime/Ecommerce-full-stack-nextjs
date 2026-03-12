@@ -1,6 +1,7 @@
 import { connectDB } from "@/lib/dbConnect";
 import { zSchema } from "@/lib/zodSchema";
 import UserModel from "@/models/user.model";
+import { SignJWT } from "jose";
 
 export async function POST(request) {
   try {
@@ -34,6 +35,12 @@ export async function POST(request) {
     await newUser.save();
 
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const token = await new SignJWT({ userId: newUser._id })
+      .setIssuedAt()
+      .setExpirationTime("1h")
+      .setProtectedHeader({ alg: "HS256", typ: "JWT" }) 
+      .sign(secret);
+    return response(true, 201, "User created successfully", { token });
   } catch (error) {
     return response(false, 500, "Internal server error", null);
   }

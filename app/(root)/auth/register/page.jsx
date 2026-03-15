@@ -47,6 +47,12 @@ const RegisterPage = () => {
 
     const onRegisterSubmit = async (values) => {
       console.log(values);
+      try {
+        setLoading(true);
+        const {data:registerResponse}=
+      } catch (error) {
+        
+      }
     };
 
     return (

@@ -1,4 +1,7 @@
+import { emailVerificationLink } from "@/email/emailVerificationLink";
 import { connectDB } from "@/lib/dbConnect";
+import { errorResponse } from "@/lib/helperFunction";
+import { sendMail } from "@/lib/sendMail";
 import { zSchema } from "@/lib/zodSchema";
 import UserModel from "@/models/user.model";
 import { SignJWT } from "jose";
@@ -38,10 +41,18 @@ export async function POST(request) {
     const token = await new SignJWT({ userId: newUser._id })
       .setIssuedAt()
       .setExpirationTime("1h")
-      .setProtectedHeader({ alg: "HS256", typ: "JWT" }) 
+      .setProtectedHeader({ alg: "HS256", typ: "JWT" })
       .sign(secret);
+
+    await sendMail(
+      "Email Verification request from Developer Mubtasim",
+      email,
+      emailVerificationLink(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${token}`,
+      ),
+    );
     return response(true, 201, "User created successfully", { token });
   } catch (error) {
-    return response(false, 500, "Internal server error", null);
+    return errorResponse(error, "Failed to register user");
   }
 }

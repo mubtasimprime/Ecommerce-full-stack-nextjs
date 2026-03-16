@@ -20,6 +20,7 @@ import z from "zod";
 import { useState } from "react";
 import Link from "next/link";
 import { WEBSITE_LOGIN } from "@/routes/WebsiteRoute";
+import axios from "axios";
 
 const RegisterPage = () => {
   {
@@ -49,9 +50,19 @@ const RegisterPage = () => {
       console.log(values);
       try {
         setLoading(true);
-        const {data:registerResponse}=
+        const { data: registerResponse } = await axios.post(
+          "/api/auth/register",
+          values,
+        );
+        if (!registerResponse.success) {
+          throw new Error(registerResponse.message);
+        }
+        form.reset(registerResponse.message);
+        alert();
       } catch (error) {
-        
+        alert(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
